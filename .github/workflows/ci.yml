@@ -11,7 +11,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '16.x'
+          node-version: '20.x'
       - name: Install Dependencies
         run: yarn ci:install
       - name: Run linter
