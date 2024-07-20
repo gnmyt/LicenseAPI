@@ -16,7 +16,7 @@ import {projectSidebar, sidebar} from "@/common/routes";
 import DarkLogo from "@/common/assets/images/logo/small-dark.webp";
 import LightLogo from "@/common/assets/images/logo/small-light.webp";
 import {useContext} from "react";
-import {ProjectContext} from "@/states/Dashboard/contexts/Project/index.js";
+import {ProjectContext} from "@/states/Dashboard/contexts/Project";
 
 const drawerWidth = 260;
 
