@@ -1,7 +1,7 @@
 import {AppBar, Avatar, IconButton, Stack, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {useContext, useEffect, useState} from "react";
-import {projectSidebar, sidebar} from "@/common/routes/index.jsx";
+import {projectSidebar, sidebar} from "@/common/routes";
 import {useLocation} from "react-router-dom";
 import {ProjectContext} from "@/states/Dashboard/contexts/Project";
 import {UserContext} from "@contexts/User";
