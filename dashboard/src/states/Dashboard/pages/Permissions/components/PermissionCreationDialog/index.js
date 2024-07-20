@@ -1,0 +1,1 @@
+export {PermissionCreationDialog as default} from "./PermissionCreationDialog";
