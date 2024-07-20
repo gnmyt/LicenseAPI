@@ -59,7 +59,10 @@ export const Permissions = () => {
                                       fetchPermissions={fetchPermissions}/>
 
             <Stack justifyContent="space-between" direction="row" sx={{mb: 2}} alignItems="center">
-                <Typography variant="h5" fontWeight={600}>{permissions.length} Permissions</Typography>
+                <Typography variant="h5" fontWeight={600}>
+                    {loading && <>Permissions</>}
+                    {!loading && <>{permissions.length} Permissions</>}
+                </Typography>
                 <Button variant="contained" color="primary" onClick={() => setDialogOpen(true)}>Create
                     permission</Button>
             </Stack>
@@ -86,7 +89,7 @@ export const Permissions = () => {
                     </Stack>
                 ))}
 
-                {loading && <Stack justifyContent="center" alignItems="center">
+                {loading && <Stack justifyContent="center" alignItems="center" sx={{width: "100%"}}>
                     <CircularProgress color="primary"/>
                 </Stack>}
 
