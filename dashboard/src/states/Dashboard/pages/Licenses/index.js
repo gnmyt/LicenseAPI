@@ -1,0 +1,1 @@
+export {Licenses as default} from "./Licenses.jsx";
