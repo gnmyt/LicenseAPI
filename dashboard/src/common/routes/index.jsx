@@ -12,13 +12,14 @@ import {
 import Info from "@/states/Dashboard/pages/Info";
 import Statistic from "@/states/Dashboard/pages/Statistic";
 import Licenses from "@/states/Dashboard/pages/Licenses";
+import Permissions from "@/states/Dashboard/pages/Permissions";
 
 export const routes = [
     {path: "/", element: <Home/>},
     {path: "/support", element: <h1>Support</h1>},
     {path: "/projects/:projectId/stats", element: <Statistic />},
     {path: "/projects/:projectId/licenses", element: <Licenses />},
-    {path: "/projects/:projectId/permissions", element: <h1>Permissions</h1>},
+    {path: "/projects/:projectId/permissions", element: <Permissions />},
     {path: "/projects/:projectId/groups", element: <h1>Groups</h1>},
     {path: "/projects/:projectId/meta", element: <h1>Meta-Data</h1>},
     {path: "/projects/:projectId/keys", element: <h1>Access keys</h1>},
