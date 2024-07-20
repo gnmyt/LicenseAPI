@@ -36,7 +36,7 @@ const LicenseSchema = new Schema<ILicense>({
         default: 0
     },
     expirationDate: {
-        type: String,
+        type: Date,
         default: Date.now
     }
 });
