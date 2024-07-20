@@ -1,0 +1,1 @@
+export {GroupPermissionDialog as default} from "./GroupPermissionDialog.jsx";
