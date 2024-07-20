@@ -19,7 +19,7 @@ export const validateLicense = async (validationKey: string, licenseKey: string)
     const license = await License.findOne({ projectId: String(project.id), key: licenseKey });
     if (license === null) return { status: ResponseStatus.INVALID, message: "The provided license key is invalid" };
 
-    if (license.expirationDate && license.expirationDate < new Date())
+    if (license.expirationDate && license.expirationDate < new Date() && new Date(license.expirationDate).getTime() !== 0)
         return { status: ResponseStatus.EXPIRED, message: "The provided license key has expired" };
 
     if (license.maxUses && license.maxUses !== -1 && license.maxUses <= license.currentUses)
