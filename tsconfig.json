@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "baseUrl": "src",
+    "rootDir": "src",
+    "outDir": "dist",
+    "paths": {
+      "@utils/*": ["utils/*"],
+      "@models/*": ["models/*"],
+      "@controller/*": ["controller/*"],
+      "@middlewares/*": ["middlewares/*"]
+    },
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "typeRoots": ["./src/types/overrides"]
+  },
+  "ts-node": {
+    "files": true
+  }
+}
