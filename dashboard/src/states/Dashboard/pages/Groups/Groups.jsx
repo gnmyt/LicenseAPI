@@ -81,11 +81,11 @@ export const Groups = () => {
                                 <Typography variant="h5" fontWeight={600}>{group.name}</Typography>
                             </Stack>
                             <Typography variant="body2" color="text.secondary">{group.description}</Typography>
-                            <Stack direction="row" gap={1} alignItems="center">
+                            <Stack direction="row" gap={1} alignItems="center" flexWrap="wrap" sx={{mt: 1}}>
                                 {group.permissions.map((permission, index) => (
-                                    <Chip key={index} label={permission} sx={{mt: 1}} onDelete={() => removeFromGroup(group, permission)}/>
+                                    <Chip key={index} label={permission} onDelete={() => removeFromGroup(group, permission)}/>
                                 ))}
-                                <Chip color="primary" label="+" sx={{mt: 1}} onClick={() => setSelectedGroup(group)}/>
+                                <Chip color="primary" label="+" onClick={() => setSelectedGroup(group)}/>
                             </Stack>
                         </Stack>
 
