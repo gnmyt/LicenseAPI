@@ -1,8 +1,8 @@
 export enum LicenseStatus {
-    VALID = 'VALID',
-    EXPIRED = 'EXPIRED',
-    INVALID = 'INVALID',
-    MAX_USES_REACHED = 'MAX_USES_REACHED',
+    VALID = "VALID",
+    EXPIRED = "EXPIRED",
+    INVALID = "INVALID",
+    MAX_USES_REACHED = "MAX_USES_REACHED",
 }
 
 export interface LicenseMeta {

@@ -1,5 +1,5 @@
-import { License, LicenseStatus } from './entities/License';
-import { LicenseMeta } from './entities/LicenseMeta';
+import { License, LicenseStatus } from "./entities/License";
+import { LicenseMeta } from "./entities/LicenseMeta";
 
 export class LicenseValidator {
     private readonly API_VERSION = 1;
@@ -8,7 +8,7 @@ export class LicenseValidator {
     private retries: number = 3;
 
     constructor(baseUrl: string, validationKey: string) {
-        this.baseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
+        this.baseUrl = baseUrl.endsWith("/") ? baseUrl.slice(0, -1) : baseUrl;
         this.validationKey = validationKey;
     }
 
@@ -16,16 +16,16 @@ export class LicenseValidator {
         const url = `${this.baseUrl}/api/v${this.API_VERSION}/validate/${encodeURIComponent(licenseKey)}`;
         try {
             const response = await fetch(url, {
-                method: 'GET',
+                method: "GET",
                 headers: {
-                    'User-Agent': 'LicenseAPI-Java-Client',
-                    'X-Validation-Key': this.validationKey,
+                    "User-Agent": "LicenseAPI-Java-Client",
+                    "X-Validation-Key": this.validationKey,
                 },
             });
             if (response.ok) return response.text();
             console.warn(`Failed to retrieve license. Status: ${response.status}`);
         } catch (error) {
-            console.error('Error retrieving license:', error);
+            console.error("Error retrieving license:", error);
         }
         return null;
     }
@@ -45,10 +45,10 @@ export class LicenseValidator {
 
     private parseLicense(status: LicenseStatus, license: any): License {
         if (status !== LicenseStatus.VALID) {
-            return new License(status, '', [], [], [], -1, 0, null);
+            return new License(status, "", [], [], [], -1, 0, null);
         }
 
-        const licenseKey = license.key || '';
+        const licenseKey = license.key || "";
         const groups = license.groups || [];
         const permissions = license.permissions || [];
         const meta = Object.keys(license.meta || {}).map(key => new LicenseMeta(key, license.meta[key]));

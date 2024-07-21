@@ -16,6 +16,6 @@ export class LicenseMeta {
     }
 
     public getAsBoolean(): boolean {
-        return this.value.toLowerCase() === 'true';
+        return this.value.toLowerCase() === "true";
     }
 }
