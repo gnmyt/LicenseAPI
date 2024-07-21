@@ -1,0 +1,54 @@
+name: Deploy to GitHub Maven
+
+on:
+  push:
+    paths:
+      - 'integrations/java/pom.xml'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 8
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'adopt'
+          java-version: '8'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: Verify version change
+        id: get_version
+        run: |
+          echo "VERSION=$(mvn -f integrations/java/pom.xml help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+          echo "VERSION: $VERSION"
+
+      - name: Check if version changed
+        id: version_check
+        run: |
+          git fetch origin main
+          LAST_VERSION=$(git show origin/main:integrations/java/pom.xml | xmllint --xpath "string(//version)" -)
+          echo "LAST_VERSION: $LAST_VERSION"
+          if [ "$LAST_VERSION" == "$VERSION" ]; then
+            echo "Version did not change. Exiting..."
+            exit 0
+          fi
+
+      - name: Build and deploy
+        if: steps.version_check.outputs.VERSION != steps.get_version.outputs.VERSION
+        run: |
+          mvn -f integrations/java/pom.xml deploy \
+            -DskipTests \
+            -DaltDeploymentRepository=github::default::https://maven.pkg.github.com/${{ github.repository }} \
+            -Dusername=${{ secrets.GITHUB_ACTOR }} \
+            -Dpassword=${{ secrets.GITHUB_TOKEN }}
