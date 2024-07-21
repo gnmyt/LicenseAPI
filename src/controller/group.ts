@@ -1,7 +1,6 @@
 import { checkProjectAccess } from "@controller/projects";
 import { IKeyRole } from "@models/AccessKey";
 import { Group, IGroup } from "@models/Group";
-import { planLimits } from "../limits/plans";
 import { Permission } from "@models/Permission";
 import { convertIdsToPermissions } from "@controller/permission";
 
@@ -35,9 +34,6 @@ export const getGroup = async (userId: string, projectId: string, groupName: str
 export const createGroup = async (userId: string, projectId: string, configuration: IGroup) => {
     const access = await checkProjectAccess(IKeyRole.MANAGE)(userId, projectId);
     if ("code" in access) return access;
-
-    const count = await Group.countDocuments({ projectId: String(access._id) });
-    if (count >= planLimits[access.plan].GROUPS) return { code: 95, message: "You have exceeded the group limit" };
 
     const group = await Group.findOne({ projectId: String(access._id), name: configuration.name });
     if (group !== null) return { code: 4008, message: "The provided group name is already in use" };

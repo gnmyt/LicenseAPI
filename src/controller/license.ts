@@ -1,7 +1,6 @@
 import { checkProjectAccess } from "@controller/projects";
 import { IKeyRole } from "@models/AccessKey";
 import { ILicense, License } from "@models/License";
-import { planLimits } from "../limits/plans";
 import { Permission } from "@models/Permission";
 import { IProject } from "@models/Project";
 import { Group } from "@models/Group";
@@ -97,9 +96,6 @@ export const getLicense = async (userId: string, projectId: string, licenseKey: 
 export const createLicense = async (userId: string, projectId: string, config: ILicense) => {
     const access = await checkProjectAccess(IKeyRole.MANAGE)(userId, projectId);
     if ("code" in access) return access;
-
-    const count = await License.countDocuments({ projectId: String(access._id) });
-    if (count >= planLimits[access.plan].LICENSES) return { code: 95, message: "You have exceeded the license limit" };
 
     if (!config.key) config.key = replaceLicenseDefaults(access.defaults.licenseKey);
     if (!config.maxUses) config.maxUses = access.defaults.maxUses;

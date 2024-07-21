@@ -4,7 +4,6 @@ import { IMember, Member } from "@models/Member";
 import { Account } from "@models/Account";
 import { sendMail } from "@utils/email";
 import { getSimpleAccountObjectById } from "@controller/account";
-import { planLimits } from "../limits/plans";
 
 export const sendInvitationMail = async (email: string, username: string, projectName: string) => {
     sendMail({
@@ -37,9 +36,6 @@ export const inviteMember = async (userId: string, projectId: string, configurat
         username: configuration.user,
         allowInvites: true,
     }, { email: configuration.user, verified: true, allowInvites: true }]);
-
-    const count = await Member.countDocuments({ projectId: String(access._id) });
-    if (count >= planLimits[access.plan].MEMBERS) return { code: 95, message: "You have exceeded the member limit" };
 
     if (account === null) return { code: 1002, message: "The provided account does not exist or disabled invites" };
     if (String(account._id) === userId) return { code: 1005, message: "You cannot invite yourself" };

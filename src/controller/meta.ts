@@ -1,7 +1,6 @@
 import { checkProjectAccess } from "@controller/projects";
 import { IKeyRole } from "@models/AccessKey";
 import { ILicenseMetaType, IMetaData, MetaData } from "@models/MetaData";
-import { planLimits } from "../limits/plans";
 
 export const isValidMetaType = (type: string, value: string) => {
     if (type === ILicenseMetaType.TEXT) return true;
@@ -50,9 +49,6 @@ export const getMetaData = async (userId: string, projectId: string, name: strin
 export const createMetaData = async (userId: string, projectId: string, config: IMetaData) => {
     const access = await checkProjectAccess(IKeyRole.MANAGE)(userId, projectId);
     if ("code" in access) return access;
-
-    const count = await MetaData.countDocuments({ projectId: String(access._id) });
-    if (count >= planLimits[access.plan].META) return { code: 95, message: "You have exceeded the meta item limit" };
 
     const meta = await MetaData.findOne({ projectId: String(access._id), name: config.name });
     if (meta !== null) return { code: 8003, message: "The provided meta item name is already in use" };

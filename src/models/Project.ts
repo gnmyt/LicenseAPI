@@ -1,10 +1,6 @@
 import { model, ObjectId, Schema } from "mongoose";
 import crypto from "crypto";
 
-export enum IProjectPlan {
-    PERSONAL = "personal", PLUS = "plus", PRO = "pro"
-}
-
 export interface IProjectDefaults {
     licenseKey: string,
     groups: string[],
@@ -18,8 +14,7 @@ export interface IProject {
     name: string,
     creatorId: ObjectId,
     validationKey: string,
-    defaults: IProjectDefaults,
-    plan: IProjectPlan
+    defaults: IProjectDefaults
 }
 
 const ProjectSchema = new Schema<IProject>({
@@ -38,10 +33,6 @@ const ProjectSchema = new Schema<IProject>({
     defaults: {
         type: Object,
         default: { licenseKey: "NNUN-UUNN-UNAU-NAAN", groups: [], expirationDate: new Date(0), permissions: [], maxUses: -1 },
-    },
-    plan: {
-        type: String,
-        default: IProjectPlan.PERSONAL
     }
 });
 

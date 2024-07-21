@@ -1,9 +1,8 @@
-import { IProject, IProjectPlan, Project } from "@models/Project";
+import { IProject, Project } from "@models/Project";
 import { Types } from "mongoose";
 import crypto from "crypto";
 import { AccessKey, IKeyRole } from "@models/AccessKey";
 import { Member } from "@models/Member";
-import { planLimits } from "../limits/plans";
 import { License } from "@models/License";
 import { Permission } from "@models/Permission";
 import { Group } from "@models/Group";
@@ -54,13 +53,9 @@ export const getProject = async (projectId: string, userId: string) => {
 };
 
 export const createProject = async (name: string, userId: string) => {
-    const count = await Project.countDocuments({ creatorId: userId,
-        plan: IProjectPlan.PERSONAL });
-
-    if (count > planLimits["account"].FREE_PROJECTS) return { code: 95, message: "You have exceeded the free project limit" };
-    if (count > 100) return { code: 95, message: "You have exceeded the project limit" };
-
     await Project.create({ name, creatorId: userId });
+
+    return {};
 };
 
 export const deleteProject = async (id: string, userId: string) => {

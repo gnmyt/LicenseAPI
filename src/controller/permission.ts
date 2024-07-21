@@ -1,7 +1,6 @@
 import { checkProjectAccess } from "@controller/projects";
 import { IKeyRole } from "@models/AccessKey";
 import { Permission } from "@models/Permission";
-import { planLimits } from "../limits/plans";
 
 export const convertIdsToPermissions = async (projectId: string, permissions: string[]) => {
     const permissionsDb = await Permission.find({ projectId: projectId, _id: { $in: permissions } });
@@ -34,9 +33,6 @@ export const createPermission = async (userId: string, projectId: string, config
     const permission = await Permission.findOne({ projectId: String(access._id), permission: configuration.permission });
     if (permission !== null) return { code: 4008, message: "The provided permission name is already in use" };
 
-    const count = await Permission.countDocuments({ projectId: String(access._id) });
-    if (count >= planLimits[access.plan].PERMISSIONS) return { code: 95, message: "You have exceeded the permission limit" };
-
     await Permission.create({ ...configuration, projectId });
 
     return {};
@@ -45,9 +41,6 @@ export const createPermission = async (userId: string, projectId: string, config
 export const deletePermission = async (userId: string, projectId: string, permissionName: string) => {
     const access = await checkProjectAccess(IKeyRole.MANAGE)(userId, projectId);
     if ("code" in access) return access;
-
-    const count = await Permission.countDocuments({ projectId: String(access._id) });
-    if (count >= planLimits[access.plan].PERMISSIONS) return { code: 95, message: "You have exceeded the permission limit" };
 
     const permission = await Permission.findOne({ projectId: String(access._id), permission: permissionName });
     if (permission === null) return { code: 4009, message: "The provided permission does not exist" };
