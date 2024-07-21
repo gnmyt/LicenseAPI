@@ -1,6 +1,6 @@
 {
   "name": "licenseapi-validator",
-  "version": "1.0.0",
+  "version": "1.0.0-PRE",
   "description": "A free, self-hosted licensing system for your software",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
