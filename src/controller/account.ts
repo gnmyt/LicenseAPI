@@ -73,5 +73,5 @@ export const getSimpleAccountObjectById = async (id: string) => {
     const account = await Account.findById(id);
     if (account === null) return {};
 
-    return {id: account._id, username: account.username, email: account.email};
+    return {id: account._id, username: account.username, email: account.email, avatar: generateAvatarUrl(account.email)};
 }
