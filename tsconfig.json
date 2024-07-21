@@ -16,8 +16,9 @@
     "strict": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "typeRoots": ["./src/types/overrides"]
+    "typeRoots": ["./src/types/overrides"],
   },
+  "exclude": ["integrations"],
   "ts-node": {
     "files": true
   }
