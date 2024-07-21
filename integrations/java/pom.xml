@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.licenseapi</groupId>
-    <artifactId>integration</artifactId>
+    <artifactId>licenseapi</artifactId>
     <version>1.0.0-PRE</version>
 
     <dependencies>
