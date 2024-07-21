@@ -3,7 +3,7 @@
 
     <groupId>de.licenseapi</groupId>
     <artifactId>integration</artifactId>
-    <version>1.0.0-PRE</version>
+    <version>1.0.0</version>
 
     <dependencies>
         <!-- JSON library -->
