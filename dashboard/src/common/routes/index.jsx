@@ -14,6 +14,7 @@ import Statistic from "@/states/Dashboard/pages/Statistic";
 import Licenses from "@/states/Dashboard/pages/Licenses";
 import Permissions from "@/states/Dashboard/pages/Permissions";
 import Groups from "@/states/Dashboard/pages/Groups";
+import MetaData from "@/states/Dashboard/pages/MetaData";
 
 export const routes = [
     {path: "/", element: <Home/>},
@@ -22,7 +23,7 @@ export const routes = [
     {path: "/projects/:projectId/licenses", element: <Licenses />},
     {path: "/projects/:projectId/permissions", element: <Permissions />},
     {path: "/projects/:projectId/groups", element: <Groups />},
-    {path: "/projects/:projectId/meta", element: <h1>Meta-Data</h1>},
+    {path: "/projects/:projectId/meta", element: <MetaData/>},
     {path: "/projects/:projectId/keys", element: <h1>Access keys</h1>},
     {path: "/projects/:projectId/members", element: <h1>Members</h1>},
     {path: "/projects/:projectId/info", element: <Info />}
