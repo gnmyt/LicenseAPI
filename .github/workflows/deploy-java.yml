@@ -45,7 +45,7 @@ jobs:
           fi
 
       - name: Build and deploy
-        if: steps.version_check.outputs.LAST_VERSION != steps.get_version.outputs.VERSION || steps.version_check.outputs.LAST_VERSION == ""
+        if: steps.version_check.outputs.LAST_VERSION != steps.get_version.outputs.VERSION || steps.version_check.outputs.LAST_VERSION == ''
         run: |
           mvn -f integrations/java/pom.xml deploy \
             -DskipTests \
