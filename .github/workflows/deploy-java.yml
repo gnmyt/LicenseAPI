@@ -37,7 +37,7 @@ jobs:
         id: version_check
         run: |
           git fetch origin main
-          LAST_VERSION=$(git show origin/main:integrations/java/pom.xml | xmllint --xpath "string(//version)" -)
+          LAST_VERSION=$(git show origin/main:integrations/java/pom.xml | grep -m1 '<version>' | sed -E 's/.*<version>([^<]+)<\/version>.*/\1/')
           echo "LAST_VERSION: $LAST_VERSION"
           if [ "$LAST_VERSION" == "$VERSION" ]; then
             echo "Version did not change. Exiting..."
