@@ -1,0 +1,22 @@
+{
+  "name": "licenseapi-validator",
+  "version": "1.0.0",
+  "description": "A free, self-hosted licensing system for your software",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "author": "Mathias Wagner",
+  "license": "MIT",
+  "devDependencies": {
+    "@swc/core": "^1.7.0",
+    "ts-node": "^10.9.2",
+    "tsup": "^8.2.1",
+    "typescript": "^5.5.3"
+  }
+}
