@@ -47,7 +47,6 @@ jobs:
       - name: Build and deploy
         if: steps.version_check.outputs.LAST_VERSION != steps.get_version.outputs.VERSION || steps.version_check.outputs.LAST_VERSION == ''
         run: |
-          mkdir ~/.m2
           echo "<settings><servers><server><id>github</id><username>${{ github.actor }}</username><password>${{ github.token }}</password></server></servers></settings>" > ~/.m2/settings.xml
           mvn -f integrations/java/pom.xml deploy \
             -DskipTests \
