@@ -16,6 +16,7 @@ import Permissions from "@/states/Dashboard/pages/Permissions";
 import Groups from "@/states/Dashboard/pages/Groups";
 import MetaData from "@/states/Dashboard/pages/MetaData";
 import AccessKeys from "@/states/Dashboard/pages/AccessKeys";
+import Members from "@/states/Dashboard/pages/Members";
 
 export const routes = [
     {path: "/", element: <Home/>},
@@ -26,7 +27,7 @@ export const routes = [
     {path: "/projects/:projectId/groups", element: <Groups />},
     {path: "/projects/:projectId/meta", element: <MetaData/>},
     {path: "/projects/:projectId/keys", element: <AccessKeys />},
-    {path: "/projects/:projectId/members", element: <h1>Members</h1>},
+    {path: "/projects/:projectId/members", element: <Members />},
     {path: "/projects/:projectId/info", element: <Info />}
 ]
 
