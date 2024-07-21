@@ -71,7 +71,7 @@ export const GroupPermissionDialog = ({group, onClose, fetchGroups}) => {
     return (
         <Dialog open={group !== null} onClose={closeDialog}>
             <DialogTitle>Update permissions</DialogTitle>
-            <DialogContent sx={{maxWidth: 350, maxHeight: 500, overflowY: 'auto'}}>
+            <DialogContent sx={{maxHeight: 500, overflowY: 'auto'}}>
                 {permissions.map(({permission}, index) => (
                     <Stack key={index} direction="row" gap={1} alignItems="center" justifyContent="space-between"
                            sx={{borderBottom: 1, borderColor: 'divider', py: 1}}>
