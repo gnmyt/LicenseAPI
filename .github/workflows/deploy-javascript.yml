@@ -1,0 +1,47 @@
+name: Deploy to NPM
+
+on:
+  push:
+    paths:
+      - 'integrations/javascript/package.json'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        working-directory: integrations/javascript
+        run: npm install
+
+      - name: Build project
+        working-directory: integrations/javascript
+        run: npm run build
+
+      - name: Get current version from package.json
+        id: get_version
+        working-directory: integrations/javascript
+        run: |
+          echo "CURRENT_VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
+      - name: Check if version is already published
+        id: check_version
+        working-directory: integrations/javascript
+        run: |
+          npm view licenseapi-validator versions --json | jq -e ". | index(\"${{ env.CURRENT_VERSION }}\") == null" > /dev/null
+        continue-on-error: true
+
+      - name: Publish package
+        if: steps.check_version.outcome == 'success'
+        working-directory: integrations/javascript
+        run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
