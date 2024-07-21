@@ -30,5 +30,5 @@ export const deleteKey = async (userId: string, projectId: string, keyId: string
     const key = await AccessKey.findOne({ _id: keyId, projectId });
     if (key === null) return { code: 8002, message: "The provided key could not be found" };
 
-    key.deleteOne();
+    await key.deleteOne();
 };
