@@ -19,7 +19,8 @@ import java.util.Date;
 
 public class LicenseValidator {
 
-    private static final String BASE_URL = "https://api.licenseapi.de/v1/";
+    private final int API_VERSION = 1;
+    private final String baseUrl;
     private final String validationKey;
 
     private int retries = 3;
@@ -27,10 +28,12 @@ public class LicenseValidator {
     /**
      * Creates a new {@link LicenseValidator} with the given validation key.
      *
+     * @param baseUrl The base url of your LicenseAPI server (e.g. https://your-server.de)
      * @param validationKey The validation key of your project. You can find it in the project
      *                      settings.
      */
-    public LicenseValidator(String validationKey) {
+    public LicenseValidator(String baseUrl, String validationKey) {
+        this.baseUrl = baseUrl.endsWith("/") ? baseUrl.substring(0, baseUrl.length() - 1) : baseUrl;
         this.validationKey = validationKey;
     }
 
@@ -42,7 +45,7 @@ public class LicenseValidator {
      */
     private String retrieveLicenseRaw(String licenseKey) {
         try {
-            String url = String.format("%s/validate/%s", BASE_URL, URLDecoder.decode(licenseKey, "UTF-8"));
+            String url = String.format("%s/api/v%s/validate/%s", baseUrl, API_VERSION, URLDecoder.decode(licenseKey, "UTF-8"));
 
             HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("GET");
