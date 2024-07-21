@@ -73,7 +73,7 @@ export const deleteMetaData = async (userId: string, projectId: string, name: st
     const meta = await MetaData.findOne({ projectId: String(access._id), name });
     if (meta === null) return { code: 8002, message: "The provided meta item could not be found" };
 
-    meta.deleteOne();
+    await meta.deleteOne();
 }
 
 export const updateMetaData = async (userId: string, projectId: string, name: string, config: IMetaData) => {
