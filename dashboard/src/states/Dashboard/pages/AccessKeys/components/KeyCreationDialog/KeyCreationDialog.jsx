@@ -27,7 +27,7 @@ export const KeyCreationDialog = ({open, onClose, fetchKeys, setCreatedKey}) => 
         setName(event.target.value);
     }
 
-    const updateDescription = async (event) => {
+    const updateRole = async (event) => {
         setCreationError("");
         setRole(event.target.value);
     }
@@ -70,7 +70,7 @@ export const KeyCreationDialog = ({open, onClose, fetchKeys, setCreatedKey}) => 
 
                 <FormControl fullWidth sx={{my: 1}}>
                     <InputLabel id="role-select-label">Role</InputLabel>
-                    <Select labelId="role-select-label" value={role} onChange={updateDescription}
+                    <Select labelId="role-select-label" value={role} onChange={updateRole}
                             input={<OutlinedInput label="Role"/>}>
                         <MenuItem value={0}>Viewer</MenuItem>
                         <MenuItem value={1}>Manager</MenuItem>
