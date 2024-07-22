@@ -56,6 +56,10 @@ export const Permissions = ({setPermissions, permissions}) => {
                 </Stack>
             ))}
 
+            {onlinePermissions.length === 0 && !loading && <Stack justifyContent="center" alignItems="center" sx={{mt: 2}}>
+                <Typography variant="h6">No permissions found.</Typography>
+            </Stack>}
+
             {loading && <Stack justifyContent="center" alignItems="center" sx={{mt: 2}}>
                 <CircularProgress/>
             </Stack>}
