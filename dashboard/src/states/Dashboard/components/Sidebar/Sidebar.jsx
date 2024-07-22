@@ -56,8 +56,6 @@ export const Sidebar = ({mobileOpen, toggleOpen, window: containerWindow}) => {
 
             <List>
                 <Box sx={{mb: 1}}>
-                    <Typography variant="p" sx={{ml: 1.5, mt: 2, mb: 2}} fontWeight={700} color="text.secondary">
-                        LicenseAPI</Typography>
                     {getSidebar(sidebar)}
                 </Box>
                 {currentProject !== null && <Box sx={{mb: 1}}>
