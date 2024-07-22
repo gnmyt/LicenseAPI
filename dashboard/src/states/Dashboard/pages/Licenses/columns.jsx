@@ -1,7 +1,7 @@
 import {Chip, IconButton, Stack} from "@mui/material";
 import {Delete, Edit, Key} from "@mui/icons-material";
 
-export default (deleteLicense) => ([
+export default (deleteLicense, editLicense) => ([
     {
         field: 'key', headerName: 'License key', width: 230, renderCell: (params) => <Stack direction="row" gap={1}
                                                                                             alignItems="center">
@@ -30,7 +30,7 @@ export default (deleteLicense) => ([
     {
         field: 'actions', headerName: 'Actions', width: 100, renderCell: (params) => <Stack direction="row" gap={1}
                                                                                      height="100%" alignItems="center">
-            <IconButton size="small" color="primary"><Edit/></IconButton>
+            <IconButton size="small" color="primary" onClick={() => editLicense(params.row)}><Edit/></IconButton>
             <IconButton size="small" color="error" onClick={() => deleteLicense(params.row.id)}><Delete/></IconButton>
         </Stack>, sortable: false, filterable: false, align: 'center'
     }
