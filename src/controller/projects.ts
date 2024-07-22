@@ -66,9 +66,9 @@ export const getProjectUnsafe = async (projectId: string): Promise<IProject | nu
 }
 
 export const createProject = (name: string, userId: string) => {
-    return new Promise((resolve, reject) => generateKeyPair('rsa', {
-            modulusLength: 4096, publicKeyEncoding: {type: 'spki', format: 'pem'},
-            privateKeyEncoding: {type: 'pkcs8', format: 'pem'}
+    return new Promise((resolve, reject) => generateKeyPair("rsa", {
+            modulusLength: 4096, publicKeyEncoding: {type: "spki", format: "pem"},
+            privateKeyEncoding: {type: "pkcs8", format: "pem"}
         }, async (err, publicKey, privateKey) => {
             if (err) return reject({code: 5000, message: "An error occurred while generating the key pair"});
 

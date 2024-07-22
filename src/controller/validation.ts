@@ -60,7 +60,7 @@ export const signOfflineKey = async (validationKey: string, licenseKey: string) 
     const signature = signer.sign(project.privateKey, "hex");
 
     let content = JSON.stringify({signature, data: {...license.license, renewalDate}});
-    content = Buffer.from(content).toString('base64').replace(/(.{64})/g, "$1\n");
+    content = Buffer.from(content).toString("base64").replace(/(.{64})/g, "$1\n");
 
     const file = `-----BEGIN LICENSE KEY-----\n${content}\n-----END LICENSE KEY-----`;
 
