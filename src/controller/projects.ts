@@ -31,7 +31,7 @@ export const checkProjectAccess = (requiredPermission: IKeyRole) => async (userI
 const projectMapper = (project: IProject | IMemberProject) => {
     const baseProject = {id: project._id, name: project.name, validationKey: project.validationKey,
         defaults: project.defaults,};
-    if ('role' in project) return { ...baseProject, role: project.role };
+    if ("role" in project) return { ...baseProject, role: project.role };
 
     return baseProject;
 };
