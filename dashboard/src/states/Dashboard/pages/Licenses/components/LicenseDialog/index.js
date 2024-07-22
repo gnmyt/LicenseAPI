@@ -1,0 +1,1 @@
+export {LicenseDialog as default} from "./LicenseDialog.jsx";
