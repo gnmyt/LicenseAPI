@@ -1,0 +1,1 @@
+export {MetaData as default} from "./MetaData.jsx";
