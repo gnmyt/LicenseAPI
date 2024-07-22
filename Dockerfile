@@ -14,6 +14,9 @@ RUN yarn run build
 FROM node:20-alpine
 WORKDIR /usr/src/app
 
+ENV NODE_ENV=production
+ENV TZ=Etc/UTC
+
 COPY package.json .
 RUN yarn install --production
 
