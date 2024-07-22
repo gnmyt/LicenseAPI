@@ -1,10 +1,14 @@
 FROM node:20 AS build
 WORKDIR /usr/src/app
+
 COPY package.json .
 COPY yarn.lock .
-RUN yarn install --development
+COPY dashboard dashboard
+COPY src src
+COPY tsconfig.json .
 
-COPY . .
+RUN yarn install --development
+RUN cd dashboard && yarn install --development
 RUN yarn run build
 
 FROM node:20-alpine
