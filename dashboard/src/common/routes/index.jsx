@@ -1,7 +1,7 @@
 import Home from "@/states/Dashboard/pages/Home";
 import {
     AdminPanelSettings,
-    BarChart, ContactSupport,
+    BarChart,
     Group,
     Info as InfoIcon,
     Key,
@@ -20,7 +20,6 @@ import Members from "@/states/Dashboard/pages/Members";
 
 export const routes = [
     {path: "/", element: <Home/>},
-    {path: "/support", element: <h1>Support</h1>},
     {path: "/projects/:projectId/stats", element: <Statistic />},
     {path: "/projects/:projectId/licenses", element: <Licenses />},
     {path: "/projects/:projectId/permissions", element: <Permissions />},
@@ -35,12 +34,7 @@ export const sidebar = [
     {
         path: "/",
         icon: <HomeIcon />,
-        name: "Start"
-    },
-    {
-        path: "/support",
-        icon: <ContactSupport />,
-        name: "Support"
+        name: "Home"
     }
 ]
 
