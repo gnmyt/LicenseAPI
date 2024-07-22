@@ -9,6 +9,7 @@ import {
 } from "@controller/projects";
 import { sendError, validateSchema } from "@utils/error";
 import { patchProjectValidation, projectCreationValidation } from "./validations/project";
+import {leaveProject} from "@controller/member";
 
 const app: Router = Router();
 
@@ -37,6 +38,13 @@ app.delete("/:id", async (req: Request, res: Response) => {
     if (deletionError) return res.json(deletionError);
 
     res.json({ message: "The project has been successfully deleted" });
+});
+
+app.post("/:id/leave", async (req: Request, res: Response) => {
+    const leaveError = await leaveProject(String(req.user?._id), req.params.id);
+    if (leaveError) return res.json(leaveError);
+
+    res.json({ message: "You have successfully left the project" });
 });
 
 app.patch("/:id", async (req: Request, res: Response) => {
