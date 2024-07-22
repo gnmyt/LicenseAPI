@@ -100,9 +100,15 @@ export const LicenseDialog = ({open, onClose, switchToEnd, editLicense, setEditL
         }
     }
 
+    const upperCaseFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
     return (
         <Dialog open={open} onClose={closeDialog}>
-            <DialogTitle>{editLicense ? "Edit" : "Create"} license {currentPage !== "chooser" && <>» {currentPage}</>}</DialogTitle>
+            <DialogTitle onClick={() => setCurrentPage("chooser")} sx={{cursor: currentPage !== "chooser"
+                    ? "pointer" : "default"}}>{editLicense ? "Edit" : "Create"} license {currentPage !== "chooser" &&
+                <>› {upperCaseFirstLetter(currentPage)}</>}</DialogTitle>
             <DialogContent sx={{width: 400, overflow: "hidden"}}>
                 <TransitionWrapper direction="right" in={currentPage === "chooser"}>
                     <Stack gap={1}>
