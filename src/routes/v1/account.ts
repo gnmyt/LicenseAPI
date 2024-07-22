@@ -4,6 +4,7 @@ import { registerValidation, totpSetup, verificationValidation } from "./validat
 import { createAccount, generateAvatarUrl, updateTOTP, verifyAccount } from "@controller/account";
 import { authenticate } from "@middlewares/auth";
 import speakeasy from "speakeasy";
+import {acceptInvitation, declineInvitation, listInvitations} from "@controller/member";
 
 const app: Router = Router();
 
@@ -15,6 +16,32 @@ app.get("/me", authenticate, async (req: Request, res: Response) => {
 
     res.json({id: req.user._id, username: req.user.username, email: req.user.email,
         allowInvites: req.user.allowInvites, totpEnabled: req.user.totpEnabled, avatar: generateAvatarUrl(req.user.email)});
+});
+
+app.get("/me/invitations", authenticate, async (req: Request, res: Response) => {
+    if (!req.user) return sendError(res, 400, 1091, "You are not authenticated.");
+
+    const invitations = await listInvitations(String(req.user._id));
+
+    return res.json(invitations);
+});
+
+app.post("/me/invitations/:id/accept", authenticate, async (req: Request, res: Response) => {
+    if (!req.user) return sendError(res, 400, 1091, "You are not authenticated.");
+
+    const invitation = await acceptInvitation(String(req.user._id), req.params.id);
+    if (invitation) return res.json(invitation);
+
+    res.json({ message: "You have successfully accepted the invitation." });
+});
+
+app.post("/me/invitations/:id/decline", authenticate, async (req: Request, res: Response) => {
+    if (!req.user) return sendError(res, 400, 1091, "You are not authenticated.");
+
+    const invitation = await declineInvitation(String(req.user._id), req.params.id);
+    if (invitation) return res.json(invitation);
+
+    res.json({ message: "You have successfully declined the invitation." });
 });
 
 app.post("/register", async (req: Request, res: Response) => {
