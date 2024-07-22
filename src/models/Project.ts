@@ -1,5 +1,6 @@
 import { model, ObjectId, Schema } from "mongoose";
 import crypto from "crypto";
+import {IKeyRole} from "@models/AccessKey";
 
 export interface IProjectDefaults {
     licenseKey: string,
@@ -15,6 +16,10 @@ export interface IProject {
     creatorId: ObjectId,
     validationKey: string,
     defaults: IProjectDefaults
+}
+
+export interface IMemberProject extends IProject {
+    role: IKeyRole
 }
 
 const ProjectSchema = new Schema<IProject>({
