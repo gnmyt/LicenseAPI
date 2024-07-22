@@ -15,6 +15,8 @@ export interface IProject {
     name: string,
     creatorId: ObjectId,
     validationKey: string,
+    privateKey: string,
+    publicKey: string,
     defaults: IProjectDefaults
 }
 
@@ -34,6 +36,14 @@ const ProjectSchema = new Schema<IProject>({
     validationKey: {
         type: String,
         default: () => crypto.randomBytes(24).toString("hex")
+    },
+    privateKey: {
+        type: String,
+        required: true
+    },
+    publicKey: {
+        type: String,
+        required: true
     },
     defaults: {
         type: Object,
