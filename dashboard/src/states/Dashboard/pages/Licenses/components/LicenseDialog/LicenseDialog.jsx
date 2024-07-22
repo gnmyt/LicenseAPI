@@ -53,7 +53,6 @@ export const LicenseDialog = ({open, onClose, switchToEnd, editLicense, setEditL
         setCurrentPage("chooser");
 
         if (editLicense) {
-            console.log(editLicense)
             setLicenseKey(editLicense.key);
             setExpirationDate(editLicense.expirationDate);
             setPermissions(editLicense.permissions);
