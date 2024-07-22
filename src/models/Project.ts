@@ -32,7 +32,7 @@ const ProjectSchema = new Schema<IProject>({
     },
     defaults: {
         type: Object,
-        default: { licenseKey: "NNUN-UUNN-UNAU-NAAN", groups: [], expirationDate: new Date(0), permissions: [], maxUses: -1 },
+        default: { licenseKey: "NNUN-UUNN-UNUU-NUUN", groups: [], expirationDate: new Date(0), permissions: [], maxUses: -1 },
     }
 });
 
