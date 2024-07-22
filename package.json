@@ -10,11 +10,11 @@
     "ci:install": "yarn install --immutable --immutable-cache --check-cache",
     "backend:build": "tsc && tsc-alias",
     "backend:dev": "PROJECT_VERSION=DEV nodemon --watch \"src/**\" -r tsconfig-paths/register src/server.ts",
-    "backend:start": "PROJECT_VERSION=$(node -p \"require('./package.json').version\") node dist/server.js",
+    "backend:start": "NODE_ENV=production PROJECT_VERSION=$(node -p \"require('./package.json').version\") node dist/server.js",
     "dashboard:build": "cd dashboard && yarn build",
     "dashboard:dev": "cd dashboard && yarn dev",
     "dev": "concurrently --kill-others-on-fail \"yarn backend:dev\" \"yarn dashboard:dev\"",
-    "start": "concurrently \"yarn backend:start\" \"yarn dashboard:dev\"",
+    "start": "yarn build && yarn backend:start",
     "build": "yarn backend:build && yarn dashboard:build"
   },
   "dependencies": {
