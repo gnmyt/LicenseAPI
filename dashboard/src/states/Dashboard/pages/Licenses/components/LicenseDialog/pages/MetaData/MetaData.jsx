@@ -69,6 +69,10 @@ export const MetaData = ({metaData, setMetaData}) => {
                 </Stack>
             ))}
 
+            {onlineMeta.length === 0 && !loading && <Stack justifyContent="center" alignItems="center" sx={{mt: 2}}>
+                <Typography variant="h6" color="text.secondary">No metadata found</Typography>
+            </Stack>}
+
             {loading && <Stack justifyContent="center" alignItems="center" sx={{mt: 2}}>
                 <CircularProgress/>
             </Stack>}
