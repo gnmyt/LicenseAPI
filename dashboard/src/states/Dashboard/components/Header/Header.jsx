@@ -1,8 +1,8 @@
-import {AppBar, Avatar, IconButton, Stack, Toolbar, Typography} from "@mui/material";
+import {AppBar, Avatar, IconButton, MenuItem, Select, Stack, Toolbar, Typography} from "@mui/material";
 import {Menu} from "@mui/icons-material";
 import {useContext, useEffect, useState} from "react";
 import {projectSidebar, sidebar} from "@/common/routes";
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {ProjectContext} from "@/states/Dashboard/contexts/Project";
 import {UserContext} from "@contexts/User";
 import AccountMenu from "@/states/Dashboard/components/Header/components/AccountMenu";
@@ -11,7 +11,8 @@ const drawerWidth = 260;
 
 export const Header = ({toggleOpen}) => {
     const location = useLocation();
-    const {currentProject} = useContext(ProjectContext);
+    const navigate = useNavigate();
+    const {currentProject, projects, setCurrentProject} = useContext(ProjectContext);
     const {user} = useContext(UserContext);
 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -27,6 +28,15 @@ export const Header = ({toggleOpen}) => {
         return "Start";
     }
 
+    const switchProject = (project) => {
+        if (!project) return;
+        const path = location.pathname.replace(currentProject.id, project.id);
+        setCurrentProject(project);
+
+        navigate(-1);
+        setTimeout(() => navigate(path), 100);
+    }
+
     return (
         <>
             <AccountMenu open={menuOpen} setOpen={setMenuOpen}/>
@@ -40,6 +50,12 @@ export const Header = ({toggleOpen}) => {
                     <Typography variant="h6" fontWeight={700}>{getTitleByPath()}</Typography>
 
                     <Stack direction="row" spacing={2} sx={{ml: "auto"}} alignItems="center">
+
+                        <Select size="small" value={currentProject?.id}
+                                onChange={(e) => switchProject(projects.find((project) => project.id === e.target.value))}>
+                            {projects.map((project) => <MenuItem key={project.id} value={project.id}>{project.name}</MenuItem>)}
+                        </Select>
+
                         <Stack sx={{background: "linear-gradient(90deg, #FF0401 0%, #FE6E27 100%)", padding: "3px",
                             borderRadius: "50%", cursor: "pointer"}} onClick={() => setMenuOpen(true)} id="menu"
                                alignItems="center" direction="row" spacing={1}>
