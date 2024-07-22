@@ -4,7 +4,7 @@ import Header from "@/states/Dashboard/components/Header";
 import Sidebar from "@/states/Dashboard/components/Sidebar";
 import {useContext, useState} from "react";
 import {ProjectProvider} from "@/states/Dashboard/contexts/Project";
-import {InfoContext} from "@contexts/Info/index.js";
+import {InfoContext} from "@contexts/Info";
 
 export const Dashboard = () => {
     const [mobileOpen, setMobileOpen] = useState(false);
