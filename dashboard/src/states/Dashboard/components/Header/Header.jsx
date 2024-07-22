@@ -25,7 +25,7 @@ export const Header = ({toggleOpen}) => {
         const route = [...sidebar, ...projectSidebar].find((route) => location.pathname
             .replace(currentProject?.id, ":projectId").startsWith(route.path) && route.path !== "/");
         if (route) return route.name;
-        return "Start";
+        return "Home";
     }
 
     const switchProject = (project) => {
@@ -51,10 +51,10 @@ export const Header = ({toggleOpen}) => {
 
                     <Stack direction="row" spacing={2} sx={{ml: "auto"}} alignItems="center">
 
-                        <Select size="small" value={currentProject?.id}
+                        {projects.length > 0 && <Select size="small" value={currentProject?.id}
                                 onChange={(e) => switchProject(projects.find((project) => project.id === e.target.value))}>
                             {projects.map((project) => <MenuItem key={project.id} value={project.id}>{project.name}</MenuItem>)}
-                        </Select>
+                        </Select>}
 
                         <Stack sx={{background: "linear-gradient(90deg, #FF0401 0%, #FE6E27 100%)", padding: "3px",
                             borderRadius: "50%", cursor: "pointer"}} onClick={() => setMenuOpen(true)} id="menu"
