@@ -18,5 +18,10 @@ export default defineConfig({
                 target: "http://localhost:8025"
             }
         }
+    },
+    build: {
+        outDir: "../build",
+        chunkSizeWarningLimit: 1600,
+        emptyOutDir: true
     }
 });
