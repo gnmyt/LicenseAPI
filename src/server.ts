@@ -3,6 +3,8 @@ import mongoose, { CallbackError } from "mongoose";
 import v1Router from "./routes/v1";
 import { sendError } from "@utils/error";
 import cors from "cors";
+import path from "node:path";
+import env from "./templates/env";
 
 const MONGOOSE_STRING = process.env.MONGOOSE_STRING || "mongodb://localhost:27017";
 
@@ -20,7 +22,15 @@ app.use("/api/", v1Router); // <- Newest
 
 app.use("/api/v1/", v1Router);
 
-app.use("/api/*", (req: Request, res: Response) => sendError(res, 404, 0, "The provided route could not be found"));
+app.use("/api/*", (_req: Request, res: Response) => sendError(res, 404, 0, "The provided route could not be found"));
+
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static(path.join(__dirname, "../build")));
+
+    app.get("*", (_req, res) => res.sendFile(path.join(__dirname, "../build", "index.html")));
+} else {
+    app.get("*", (_req, res) => res.status(500).send(env));
+}
 
 // Start the backend
 const run = () =>
