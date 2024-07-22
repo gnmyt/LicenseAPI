@@ -1,6 +1,6 @@
 import {DataGrid} from '@mui/x-data-grid';
 import {useContext, useEffect, useState} from "react";
-import {getRequest} from "@/common/utils/RequestUtil.js";
+import {deleteRequest, getRequest} from "@/common/utils/RequestUtil.js";
 import {ProjectContext} from "@/states/Dashboard/contexts/Project";
 import {Button, Stack, TextField} from "@mui/material";
 import {Search} from "@mui/icons-material";
@@ -43,13 +43,22 @@ export const Licenses = () => {
         localStorage.setItem(LOCAL_STORAGE_KEY_COLUMNS, JSON.stringify(columnSettings));
     }, [columnSettings]);
 
+    const deleteLicense = async (licenseKey) => {
+        try {
+            await deleteRequest(`/license/${currentProject.id}/${encodeURIComponent(licenseKey)}`);
+            fetchLicenses();
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     const handlePaginationModelChange = (model) => setPaginationModel(prev => ({...prev, page: model.page,
         pageSize: model.pageSize}));
 
     const handleColumnWidthChange = (params) => setColumnSettings((prev) => ({...prev,
         [params.colDef.field]: params.width}));
 
-    const getColumnsWithWidth = () => columns.map(column => ({...column,
+    const getColumnsWithWidth = () => columns(deleteLicense).map(column => ({...column,
         width: columnSettings[column.field] || column.width}));
 
     const updateDisplayedColumns = (columns) => {
