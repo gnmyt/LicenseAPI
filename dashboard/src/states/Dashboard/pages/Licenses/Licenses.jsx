@@ -5,7 +5,7 @@ import {ProjectContext} from "@/states/Dashboard/contexts/Project";
 import {Button, Link, Stack, TextField, Typography} from "@mui/material";
 import {Search} from "@mui/icons-material";
 import columns from "./columns.jsx";
-import LicenseDialog from "@/states/Dashboard/pages/Licenses/components/LicenseDialog/index.js";
+import LicenseDialog from "@/states/Dashboard/pages/Licenses/components/LicenseDialog";
 
 const LOCAL_STORAGE_KEY_PAGINATION = 'licenses_table_pagination';
 const LOCAL_STORAGE_KEY_COLUMNS = 'licenses_table_columns';
