@@ -29,13 +29,26 @@ export const generateRandom = () => {
 }
 
 export const replaceLicenseDefaults = (defaultKey: string) => {
-    return defaultKey.replace(/N/g, () => String(Math.floor(Math.random() * 10)))
-        .replace(/C/g, () => generateCharacter())
-        .replace(/L/g, () => String.fromCharCode(Math.floor(Math.random() * 26) + 97))
-        .replace(/U/g, () => String.fromCharCode(Math.floor(Math.random() * 26) + 65))
-        .replace(/S/g, () => generateSpecialCharacter())
-        .replace(/A/g, () => generateAlphaNumeric())
-        .replace(/R/g, () => generateRandom());
+    return defaultKey.split('').map(char => {
+        switch (char) {
+            case 'N':
+                return String(Math.floor(Math.random() * 10));
+            case 'C':
+                return generateCharacter();
+            case 'L':
+                return String.fromCharCode(Math.floor(Math.random() * 26) + 97);
+            case 'U':
+                return String.fromCharCode(Math.floor(Math.random() * 26) + 65);
+            case 'S':
+                return generateSpecialCharacter();
+            case 'A':
+                return generateAlphaNumeric();
+            case 'R':
+                return generateRandom();
+            default:
+                return char;
+        }
+    }).join('');
 }
 
 export const checkLicenseConfiguration = async (access: IProject, config: ILicense) => {
