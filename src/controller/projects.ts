@@ -1,12 +1,13 @@
 import {IMemberProject, IProject, Project} from "@models/Project";
-import { Types } from "mongoose";
+import {Types} from "mongoose";
 import crypto from "crypto";
-import { AccessKey, IKeyRole } from "@models/AccessKey";
-import { Member } from "@models/Member";
-import { License } from "@models/License";
-import { Permission } from "@models/Permission";
-import { Group } from "@models/Group";
-import { MetaData } from "@models/MetaData";
+import {AccessKey, IKeyRole} from "@models/AccessKey";
+import {Member} from "@models/Member";
+import {License} from "@models/License";
+import {Permission} from "@models/Permission";
+import {Group} from "@models/Group";
+import {MetaData} from "@models/MetaData";
+import {generateKeyPair} from "node:crypto";
 
 export const checkProjectAccess = (requiredPermission: IKeyRole) => async (userId: string, projectId: string) => {
     if (!Types.ObjectId.isValid(projectId))
@@ -64,10 +65,18 @@ export const getProjectUnsafe = async (projectId: string): Promise<IProject | nu
     return project;
 }
 
-export const createProject = async (name: string, userId: string) => {
-    await Project.create({ name, creatorId: userId });
+export const createProject = (name: string, userId: string) => {
+    return new Promise((resolve, reject) => generateKeyPair('rsa', {
+            modulusLength: 4096, publicKeyEncoding: {type: 'spki', format: 'pem'},
+            privateKeyEncoding: {type: 'pkcs8', format: 'pem'}
+        }, async (err, publicKey, privateKey) => {
+            if (err) return reject({code: 5000, message: "An error occurred while generating the key pair"});
 
-    return {};
+            await Project.create({name, creatorId: userId, privateKey, publicKey});
+
+            resolve(true);
+        })
+    );
 };
 
 export const deleteProject = async (id: string, userId: string) => {
