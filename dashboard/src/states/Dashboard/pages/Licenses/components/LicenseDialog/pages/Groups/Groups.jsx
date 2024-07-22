@@ -56,6 +56,10 @@ export const Groups = ({setGroups, groups}) => {
                 </Stack>
             ))}
 
+            {onlineGroups.length === 0 && !loading && <Stack justifyContent="center" alignItems="center" sx={{mt: 2}}>
+                <Typography variant="h6" color="text.secondary">No groups found</Typography>
+            </Stack>}
+
             {loading && <Stack justifyContent="center" alignItems="center" sx={{mt: 2}}>
                 <CircularProgress/>
             </Stack>}
