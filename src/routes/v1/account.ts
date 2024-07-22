@@ -18,6 +18,9 @@ app.get("/me", authenticate, async (req: Request, res: Response) => {
 });
 
 app.post("/register", async (req: Request, res: Response) => {
+    if (process.env.DISABLE_SIGNUPS === "true")
+        return sendError(res, 400, 1094, "Signups are disabled on this server.");
+
     if (validateSchema(res, registerValidation, req.body)) return;
 
     const account = await createAccount(req.body);
