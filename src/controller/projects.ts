@@ -1,4 +1,4 @@
-import { IProject, Project } from "@models/Project";
+import {IMemberProject, IProject, Project} from "@models/Project";
 import { Types } from "mongoose";
 import crypto from "crypto";
 import { AccessKey, IKeyRole } from "@models/AccessKey";
@@ -28,18 +28,23 @@ export const checkProjectAccess = (requiredPermission: IKeyRole) => async (userI
     return { code: 5009, message: "The provided project id does not exist" };
 };
 
-const projectMapper = (project: IProject) => ({
-    id: project._id, name: project.name, validationKey: project.validationKey,
-    defaults: project.defaults,
-});
+const projectMapper = (project: IProject | IMemberProject) => {
+    const baseProject = {id: project._id, name: project.name, validationKey: project.validationKey,
+        defaults: project.defaults,};
+    if ('role' in project) return { ...baseProject, role: project.role };
+
+    return baseProject;
+};
 
 export const listProjects = async (userId?: string) => {
-    const projects = await Project.find({ creatorId: userId || "" });
+    const projects: Array<IProject | IMemberProject> = await Project.find({ creatorId: userId || "" });
 
     const memberProjects = await Member.find({ memberId: userId || "", accepted: true });
-    for (const project of memberProjects) {
-        const foundProject = await Project.findById(project.projectId);
-        if (foundProject !== null) projects.push(foundProject);
+    for (const memberProject of memberProjects) {
+        const foundProject = await Project.findById(memberProject.projectId);
+        if (foundProject !== null) {
+            projects.push({ ...foundProject.toObject(), role: memberProject.role });
+        }
     }
 
     return projects.map(project => projectMapper(project));
@@ -51,6 +56,13 @@ export const getProject = async (projectId: string, userId: string) => {
 
     return projectMapper(project);
 };
+
+export const getProjectUnsafe = async (projectId: string): Promise<IProject | null> => {
+    const project = await Project.findById(projectId);
+    if (project === null) return null;
+
+    return project;
+}
 
 export const createProject = async (name: string, userId: string) => {
     await Project.create({ name, creatorId: userId });
