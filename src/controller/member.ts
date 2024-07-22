@@ -1,9 +1,9 @@
-import { checkProjectAccess } from "@controller/projects";
-import { IKeyRole } from "@models/AccessKey";
-import { IMember, Member } from "@models/Member";
-import { Account } from "@models/Account";
-import { sendMail } from "@utils/email";
-import { getSimpleAccountObjectById } from "@controller/account";
+import {checkProjectAccess, getProjectUnsafe} from "@controller/projects";
+import {IKeyRole} from "@models/AccessKey";
+import {IMember, Member} from "@models/Member";
+import {Account} from "@models/Account";
+import {sendMail} from "@utils/email";
+import {getSimpleAccountObjectById} from "@controller/account";
 
 export const sendInvitationMail = async (email: string, username: string, projectName: string) => {
     sendMail({
@@ -76,3 +76,36 @@ export const deleteMember = async (userId: string, projectId: string, configurat
 
     await member.deleteOne();
 };
+
+export const listInvitations = async (userId: string) => {
+    const account = await Account.findById(userId);
+    if (account === null) return { code: 1002, message: "The provided account does not exist" };
+
+    const members = await Member.find({ memberId: userId, accepted: false });
+
+    return await Promise.all(members.map(async member => {
+        const project = await getProjectUnsafe(String(member.projectId));
+        return {id: project?._id, name: project?.name, role: member.role};
+    }));
+};
+
+export const acceptInvitation = async (userId: string, projectId: string) => {
+    const member = await Member.findOne({ memberId: userId, projectId, accepted: false });
+    if (member === null) return { code: 1002, message: "The provided invitation does not exist" };
+
+    await member.updateOne({ accepted: true });
+}
+
+export const declineInvitation = async (userId: string, projectId: string) => {
+    const member = await Member.findOne({ memberId: userId, projectId, accepted: false });
+    if (member === null) return { code: 1002, message: "The provided invitation does not exist" };
+
+    await member.deleteOne();
+}
+
+export const leaveProject = async (userId: string, projectId: string) => {
+    const member = await Member.findOne({ memberId: userId, projectId, accepted: true });
+    if (member === null) return { code: 1002, message: "The provided member is not part of this project" };
+
+    await member.deleteOne();
+}
