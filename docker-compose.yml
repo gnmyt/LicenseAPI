@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    image: germannewsmaker/licenseapi:development
+    ports:
+      - "8025:8025"
+    depends_on:
+      - mongo
+    environment:
+      MONGOOSE_STRING: mongodb://mongo:27017/licenseapi
+      MAIL_SERVER: smtp.gmail.com
+      MAIL_PORT: 587
+      MAIL_USER: noreply@gmail.com
+      MAIL_PASS: password
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
