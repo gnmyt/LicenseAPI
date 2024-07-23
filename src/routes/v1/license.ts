@@ -8,11 +8,12 @@ const app: Router = Router();
 app.get("/:projectId/list", async (req: Request, res: Response) => {
     const page = Number(req.query.page) || 0;
     const limit = Number(req.query.limit) || 100;
+    const search = req.query.search ? String(req.query.search) : undefined;
 
     if (page < 0) return sendError(res, 400, 4, "The page number cannot be negative");
     if (limit < 1) return sendError(res, 400, 4, "The limit cannot be less than 1");
 
-    const licenses = await listLicensesPaginated(String(req.user?._id), req.params.projectId, page, limit);
+    const licenses = await listLicensesPaginated(String(req.user?._id), req.params.projectId, page, limit, search);
     if ("code" in licenses) return res.json(licenses);
 
     res.json(licenses);
