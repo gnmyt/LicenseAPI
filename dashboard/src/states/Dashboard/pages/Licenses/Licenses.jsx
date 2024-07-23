@@ -19,6 +19,8 @@ export const Licenses = () => {
     const [paginationModel, setPaginationModel] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_PAGINATION))
         || {page: 1, pageSize: 25, rowCount: 0});
 
+    const [search, setSearch] = useState("");
+
     const [columnSettings, setColumnSettings] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_COLUMNS)) || {});
     const [disabledColumns, setDisabledColumns] = useState(JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY_DISPLAYED_COLUMNS)) || []);
 
@@ -30,7 +32,7 @@ export const Licenses = () => {
     const fetchLicenses = async () => {
         setIsLoading(true);
         try {
-            const data = await getRequest(`/license/${currentProject.id}/list?limit=${paginationModel.pageSize}&page=${paginationModel.page}`);
+            const data = await getRequest(`/license/${currentProject.id}/list?limit=${paginationModel.pageSize}&page=${paginationModel.page}&search=${search}`);
             setRows(data?.licenses.map((license) => ({id: license.key, ...license})) || []);
             setPaginationModel(prev => ({...prev, rowCount: data.total}));
             setIsLoading(false);
@@ -59,6 +61,10 @@ export const Licenses = () => {
     useEffect(() => {
         localStorage.setItem(LOCAL_STORAGE_KEY_COLUMNS, JSON.stringify(columnSettings));
     }, [columnSettings]);
+
+    useEffect(() => {
+        fetchLicenses();
+    }, [search]);
 
     const deleteLicense = async (licenseKey) => {
         try {
@@ -110,6 +116,7 @@ export const Licenses = () => {
 
             <Stack justifyContent="space-between" direction="row" sx={{mb: 2}} alignItems="center">
                 <TextField variant="outlined" size="small" placeholder="Lookup license"
+                            value={search} onChange={(e) => setSearch(e.target.value)}
                            InputProps={{startAdornment: <Search sx={{mr: 1}}/>}}/>
 
                 <Button variant="contained" color="primary" onClick={() => setDialogOpen(true)}>
