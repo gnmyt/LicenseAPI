@@ -84,15 +84,20 @@ export const mapLicense = async (projectId: string, license: any, publicAccess: 
     }
 }
 
-export const listLicensesPaginated = async (userId: string, projectId: string, page: number, limit: number) => {
+export const listLicensesPaginated = async (userId: string, projectId: string, page: number, limit: number, search?: string) => {
     const access = await checkProjectAccess(IKeyRole.VIEW)(userId, projectId);
     if ("code" in access) return access;
 
-    const licenses = await License.find({ projectId: String(access._id) }).skip(page * limit).limit(limit);
+    try {
+        const licenses = await License.find({ projectId: String(access._id),
+            key: { $regex: search || "", $options: "i" }}).skip(page * limit).limit(limit);
 
-    return {
-        total: await License.countDocuments({ projectId: String(access._id) }),
-        licenses: await Promise.all(licenses.map(license => mapLicense(projectId, license, false)))
+        return {
+            total: await License.countDocuments({ projectId: String(access._id) }),
+            licenses: await Promise.all(licenses.map(license => mapLicense(projectId, license, false)))
+        }
+    } catch (e) {
+        return { code: 5000, message: "Please provide a valid regex search query" };
     }
 }
 
