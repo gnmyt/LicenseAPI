@@ -25,6 +25,7 @@ export const GroupCreationDialog = ({open, onClose, fetchGroups}) => {
     const closeDialog = () => {
         onClose();
 
+        setName("");
         setDescription("");
         setCreationError("");
     }
