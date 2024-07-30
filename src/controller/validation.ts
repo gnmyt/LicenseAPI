@@ -53,7 +53,7 @@ export const signOfflineKey = async (validationKey: string, licenseKey: string) 
     const signer = createSign("RSA-SHA256");
 
     const renewalDate = new Date();
-    renewalDate.setDate(renewalDate.getDate() + 7); // TODO: Let the user choose the renewal date
+    renewalDate.setDate(renewalDate.getDate() + (project.offlineRenewalDays || 7));
 
     signer.update(JSON.stringify({...license.license, renewalDate}));
 
