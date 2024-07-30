@@ -31,7 +31,7 @@ export const checkProjectAccess = (requiredPermission: IKeyRole) => async (userI
 
 const projectMapper = (project: IProject | IMemberProject) => {
     const baseProject = {id: project._id, name: project.name, validationKey: project.validationKey,
-        defaults: project.defaults,};
+        offlineRenewalDays: project.offlineRenewalDays, defaults: project.defaults,};
     if ("role" in project) return { ...baseProject, role: project.role };
 
     return baseProject;
@@ -58,6 +58,13 @@ export const getProject = async (projectId: string, userId: string) => {
     return projectMapper(project);
 };
 
+export const getProjectKey = async (projectId: string, userId: string) => {
+    const project = await checkProjectAccess(IKeyRole.VIEW)(userId, projectId);
+    if ("code" in project) return project;
+
+    return { key: project.publicKey };
+}
+
 export const getProjectUnsafe = async (projectId: string): Promise<IProject | null> => {
     const project = await Project.findById(projectId);
     if (project === null) return null;
@@ -83,23 +90,24 @@ export const deleteProject = async (id: string, userId: string) => {
     const project = await checkProjectAccess(IKeyRole.ADMIN)(userId, id);
     if ("code" in project) return project;
 
-    License.deleteMany({ projectId: project.id });
-    Permission.deleteMany({ projectId: project.id });
-    Group.deleteMany({ projectId: project.id });
-    MetaData.deleteMany({ projectId: project.id });
-    AccessKey.deleteMany({ projectId: project.id });
-    Member.deleteMany({ projectId: project.id });
+    await License.deleteMany({ projectId: project.id });
+    await Permission.deleteMany({ projectId: project.id });
+    await Group.deleteMany({ projectId: project.id });
+    await MetaData.deleteMany({ projectId: project.id });
+    await AccessKey.deleteMany({ projectId: project.id });
+    await Member.deleteMany({ projectId: project.id });
 
     await project?.deleteOne();
 };
 
 export const patchProject = async (id: string, userId: string, config: {
-    name: string, defaults: { licenseKey: string, groups: [], permissions: [], expirationDate: Date }
+    name: string, offlineRenewalDays: number, defaults: { licenseKey: string, groups: [], permissions: [], expirationDate: Date }
 }) => {
     const project = await checkProjectAccess(IKeyRole.MANAGE)(userId, id);
     if ("code" in project) return project;
 
-    await project.updateOne({ name: config.name, defaults: Object.assign(project.defaults, config.defaults) });
+    await project.updateOne({ name: config.name, offlineRenewalDays: config.offlineRenewalDays,
+        defaults: Object.assign(project.defaults, config.defaults) });
 };
 
 export const regenerateKey = async (id: string, userId: string) => {
