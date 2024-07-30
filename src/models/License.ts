@@ -7,7 +7,6 @@ export interface ILicense {
     groups?: string[],
     permissions?: string[],
     meta: { [key: string]: string },
-    maxUses: number,
     currentUses: number,
     expirationDate?: Date
 }
@@ -26,10 +25,6 @@ const LicenseSchema = new Schema<ILicense>({
     meta: {
         type: Object,
         default: {}
-    },
-    maxUses: {
-        type: Number,
-        default: -1
     },
     currentUses: {
         type: Number,
