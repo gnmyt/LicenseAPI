@@ -116,7 +116,6 @@ export const createLicense = async (userId: string, projectId: string, config: I
     if ("code" in access) return access;
 
     if (!config.key) config.key = replaceLicenseDefaults(access.defaults.licenseKey);
-    if (!config.maxUses) config.maxUses = access.defaults.maxUses;
     if (!config.groups) config.groups = access.defaults.groups;
     if (!config.permissions) config.permissions = access.defaults.permissions;
     if (!config.expirationDate) config.expirationDate = access.defaults.expirationDate;
