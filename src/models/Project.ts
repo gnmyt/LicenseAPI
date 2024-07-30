@@ -6,8 +6,7 @@ export interface IProjectDefaults {
     licenseKey: string,
     groups: string[],
     permissions: string[],
-    expirationDate: Date,
-    maxUses: number
+    expirationDate: Date
 }
 
 export interface IProject {
@@ -52,7 +51,7 @@ const ProjectSchema = new Schema<IProject>({
     },
     defaults: {
         type: Object,
-        default: { licenseKey: "NNUN-UUNN-UNUU-NUUN", groups: [], expirationDate: new Date(0), permissions: [], maxUses: -1 },
+        default: { licenseKey: "NNUN-UUNN-UNUU-NUUN", groups: [], expirationDate: new Date(0), permissions: [] },
     }
 });
 
