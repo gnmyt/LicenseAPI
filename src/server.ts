@@ -15,6 +15,9 @@ const isDevelopment: boolean = process.env.NODE_ENV !== "production";
 
 process.env.PROJECT_VERSION = isDevelopment ? "DEV" : packageJson.version;
 
+process.env.APP_URL = process.env.APP_URL || "http://localhost:8025";
+if (process.env.APP_URL.endsWith("/")) process.env.APP_URL = process.env.APP_URL.slice(0, -1);
+
 // Configure backend
 app.disable("x-powered-by");
 app.use(cors());
