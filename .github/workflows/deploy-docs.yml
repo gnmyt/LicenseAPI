@@ -28,8 +28,11 @@ jobs:
       - name: Generate documentation
         run: yarn run generate
 
+      - name: Create CNAME file
+        run: echo 'licenseapi.gnmyt.dev' > ./output/CNAME
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          publish_dir: ./output/public
