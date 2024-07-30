@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import {
     createProject,
     deleteProject,
-    getProject,
+    getProject, getProjectKey,
     listProjects,
     patchProject,
     regenerateKey,
@@ -15,6 +15,13 @@ const app: Router = Router();
 
 app.get("/list", async (req: Request, res: Response) => {
     res.json(await listProjects(String(req.user?._id)));
+});
+
+app.get("/:id/public-key", async (req: Request, res: Response) => {
+    const request = await getProjectKey(req.params.id, String(req.user?._id));
+    if ("code" in request) return res.json(request);
+
+    res.json(request);
 });
 
 app.get("/:id", async (req: Request, res: Response) => {
