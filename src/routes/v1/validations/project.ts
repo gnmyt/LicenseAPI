@@ -6,6 +6,7 @@ export const projectCreationValidation = Joi.object({
 
 export const patchProjectValidation = Joi.object({
     name: Joi.string().alphanum().min(3).max(15),
+    offlineRenewalDays: Joi.number().min(-1).max(365 * 10),
     defaults: Joi.object({
         licenseKey: Joi.string(),
         groups: Joi.array(),
