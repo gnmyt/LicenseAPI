@@ -42,7 +42,8 @@ export default [
     },
     {
         ignores: [
-            "integrations"
+            "integrations",
+            "docs"
         ],
     }
 ];
