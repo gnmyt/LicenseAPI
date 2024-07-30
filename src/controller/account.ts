@@ -13,8 +13,8 @@ export const sendVerificationEmail = async (email: string, code: number, id: str
     sendMail({
         to: email,
         subject: "LicenseAPI verification code",
-        html: `<p>Your verification code: <b>${code}</b></p><p>Verify here: <a href="https://dash.licenseapi.de/verify/${id}/${code}">https://dash.licenseapi.de/verify/${id}/${code}</a></p>`,
-        text: `Your verification code: ${code}\nVerify here: https://dash.licenseapi.de/verify/${id}/${code}`
+        html: `<p>Your verification code: <b>${code}</b></p><p>Verify here: <a href="${process.env.APP_URL}/verify/${id}/${code}">${process.env.APP_URL}/verify/${id}/${code}</a></p>`,
+        text: `Your verification code: ${code}\nVerify here: ${process.env.APP_URL}/${id}/${code}`
     });
 };
 
