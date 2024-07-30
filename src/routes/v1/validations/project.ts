@@ -11,7 +11,6 @@ export const patchProjectValidation = Joi.object({
         licenseKey: Joi.string(),
         groups: Joi.array(),
         permissions: Joi.array(),
-        expirationDate: Joi.date(),
-        maxUses: Joi.number().min(-1).max(100000),
+        expirationDate: Joi.date()
     })
 });
