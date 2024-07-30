@@ -18,8 +18,13 @@ public enum LicenseStatus {
     INVALID,
 
     /**
-     * The provided license key has reached the maximum amount of uses.
+     * Either the provided public key has been tampered with or the signature is invalid.
      */
-    MAX_USES_REACHED
+    INVALID_SIGNATURE,
+
+    /**
+     * The license key is valid, but the license needs to be renewed.
+     */
+    RENEWAL_REQUIRED
 
 }

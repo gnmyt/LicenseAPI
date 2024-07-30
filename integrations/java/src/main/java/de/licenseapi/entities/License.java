@@ -10,7 +10,6 @@ public class License {
     private final ArrayList<String> groups;
     private final ArrayList<String> permissions;
     private final ArrayList<LicenseMeta> meta;
-    private final int maxUses;
     private final int currentUses;
     private final Date expirationDate;
 
@@ -22,18 +21,16 @@ public class License {
      * @param groups         The groups of the license
      * @param permissions    The permissions of the license
      * @param meta           The meta information of the license
-     * @param maxUses        The maximum amount of uses of the license
      * @param currentUses    The current amount of uses of the license
      * @param expirationDate The expiration date of the license
      */
     public License(LicenseStatus status, String licenseKey, ArrayList<String> groups, ArrayList<String> permissions,
-                   ArrayList<LicenseMeta> meta, int maxUses, int currentUses, Date expirationDate) {
+                   ArrayList<LicenseMeta> meta, int currentUses, Date expirationDate) {
         this.status = status;
         this.licenseKey = licenseKey;
         this.groups = groups;
         this.permissions = permissions;
         this.meta = meta;
-        this.maxUses = maxUses;
         this.currentUses = currentUses;
         this.expirationDate = expirationDate;
     }
@@ -47,7 +44,8 @@ public class License {
      *     <li>{@link LicenseStatus#VALID}</li>
      *     <li>{@link LicenseStatus#EXPIRED}</li>
      *     <li>{@link LicenseStatus#INVALID}</li>
-     *     <li>{@link LicenseStatus#MAX_USES_REACHED}</li>
+     *     <li>{@link LicenseStatus#INVALID_SIGNATURE}</li>
+     *     <li>{@link LicenseStatus#RENEWAL_REQUIRED}</li>
      * </ul>
      *
      * @return the status of the license
@@ -63,24 +61,6 @@ public class License {
      */
     public boolean isValid() {
         return status == LicenseStatus.VALID;
-    }
-
-    /**
-     * Checks if the license has expired
-     *
-     * @return {@code true} if the license has expired and {@code false} if not
-     */
-    public boolean isExpired() {
-        return status == LicenseStatus.EXPIRED;
-    }
-
-    /**
-     * Checks if the license has reached the maximum amount of uses (if the maximum amount of uses is set)
-     *
-     * @return {@code true} if the license has reached the maximum amount of uses and {@code false} if not
-     */
-    public boolean isMaxUsesReached() {
-        return status == LicenseStatus.MAX_USES_REACHED;
     }
 
     /**
@@ -153,15 +133,6 @@ public class License {
     }
 
     /**
-     * Gets the maximum amount of uses of the license. If the maximum amount of uses is not set, this method will return {@code -1}
-     *
-     * @return the maximum amount of uses of the license
-     */
-    public int getMaxUses() {
-        return maxUses;
-    }
-
-    /**
      * Gets the current amount of uses of the license
      *
      * @return the current amount of uses of the license
@@ -177,5 +148,18 @@ public class License {
      */
     public Date getExpirationDate() {
         return expirationDate;
+    }
+
+    @Override
+    public String toString() {
+        return "License{" +
+                "status=" + status +
+                ", licenseKey='" + licenseKey + '\'' +
+                ", groups=" + groups +
+                ", permissions=" + permissions +
+                ", meta=" + meta +
+                ", currentUses=" + currentUses +
+                ", expirationDate=" + expirationDate +
+                '}';
     }
 }
