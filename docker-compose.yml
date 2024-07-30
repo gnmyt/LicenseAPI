@@ -13,6 +13,8 @@ services:
       MAIL_PORT: 587
       MAIL_USER: noreply@gmail.com
       MAIL_PASS: password
+      APP_URL: http://localhost:8025
+      DISABLE_SIGNUPS: false
 
   mongo:
     image: mongo:latest
