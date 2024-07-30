@@ -17,6 +17,7 @@ export interface IProject {
     validationKey: string,
     privateKey: string,
     publicKey: string,
+    offlineRenewalDays: number,
     defaults: IProjectDefaults
 }
 
@@ -44,6 +45,10 @@ const ProjectSchema = new Schema<IProject>({
     publicKey: {
         type: String,
         required: true
+    },
+    offlineRenewalDays: {
+        type: Number,
+        default: 7
     },
     defaults: {
         type: Object,
