@@ -705,10 +705,10 @@
     prop-types "^15.8.1"
     reselect "^4.1.8"
 
-"@mui/x-date-pickers@^7.12.0":
-  version "7.12.0"
-  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-7.12.0.tgz#189acc9e3d2a5be260fab9faf5e6add516e59b09"
-  integrity sha512-WU5C7QNfSpJ9cP8vl2sY7q35NW+0TUMgEy+sl98fcPhLckq3cgV1wnVxoZnQZ3BxVQAtx+7ag/MpefU03vJcVw==
+"@mui/x-date-pickers@^7.12.1":
+  version "7.12.1"
+  resolved "https://registry.yarnpkg.com/@mui/x-date-pickers/-/x-date-pickers-7.12.1.tgz#f8db96c6617a3cf27eacc427de9247d24c922fc5"
+  integrity sha512-Zj8kt3SCQbJp1qhMi+A3I4KqB8i5OY2Q11mdOEathFhqN/SQm1sUjIa1G09cGP1dPDgK1a6KM6qJGNtcw/nuWA==
   dependencies:
     "@babel/runtime" "^7.25.0"
     "@mui/system" "^5.16.5"
