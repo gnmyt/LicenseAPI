@@ -692,15 +692,15 @@
     prop-types "^15.8.1"
     react-is "^18.3.1"
 
-"@mui/x-data-grid@^7.12.1":
-  version "7.12.1"
-  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-7.12.1.tgz#70ac9c6d8f3c3a2de0e0ff7dcff5edbb83c6c24a"
-  integrity sha512-/l9AslZKoHFfOultD2ehWIxRGuBI0RUwbhVbpAPwNP3ouDbTH0eyWfd5f6KCGhcUbG6xfceiOuTNr7uaPHqKiA==
+"@mui/x-data-grid@^7.13.0":
+  version "7.13.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-data-grid/-/x-data-grid-7.13.0.tgz#23629576d05e7141380c0fcd86de469ed9fe0658"
+  integrity sha512-opV4OgNqc9UoKkQ1z5Ot2AkluwiVQMo6UmDaxmT/v0k2uQ77eQvxJqbnCwYll0XjsRzPz6ehiTaK3nbhXm0sIQ==
   dependencies:
     "@babel/runtime" "^7.25.0"
     "@mui/system" "^5.16.5"
     "@mui/utils" "^5.16.5"
-    "@mui/x-internals" "7.12.0"
+    "@mui/x-internals" "7.13.0"
     clsx "^2.1.1"
     prop-types "^15.8.1"
     reselect "^4.1.8"
@@ -718,10 +718,10 @@
     prop-types "^15.8.1"
     react-transition-group "^4.4.5"
 
-"@mui/x-internals@7.12.0":
-  version "7.12.0"
-  resolved "https://registry.yarnpkg.com/@mui/x-internals/-/x-internals-7.12.0.tgz#9154efbf97ed5745cbd3598afea08c785c13253e"
-  integrity sha512-zgu/JqSXBflSvtzfFN8lNi5Wxw79czBv6V/crOrXqCCOzxAIsrcup2FZlwvXlzetm3otS7o/Tzfo/O5dE68NkA==
+"@mui/x-internals@7.13.0":
+  version "7.13.0"
+  resolved "https://registry.yarnpkg.com/@mui/x-internals/-/x-internals-7.13.0.tgz#80ab1ecf6ffa345a800a94b4181dae6c487b3c51"
+  integrity sha512-eUK7iykkDWU+wBfTzE/S0qh4awgVgsORfrpvuPbUp+E6qUj1Xhu9M/WKzbwz0CPFnTJZwBQ9KYrxpGXnPBEpRQ==
   dependencies:
     "@babel/runtime" "^7.25.0"
     "@mui/utils" "^5.16.5"
