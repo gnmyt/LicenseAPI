@@ -13,7 +13,7 @@
     "@emotion/styled": "^11.13.0",
     "@fontsource/inter": "^5.1.0",
     "@mui/icons-material": "^5.16.7",
-    "@mui/material": "^5.16.7",
+    "@mui/material": "^5.16.13",
     "@mui/x-data-grid": "^7.14.0",
     "@mui/x-date-pickers": "^7.14.0",
     "dayjs": "^1.11.13",
